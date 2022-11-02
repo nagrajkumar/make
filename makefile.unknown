@@ -1,0 +1,65 @@
+main.c
+
+
+#include<stdio.h>
+#include"header.h"
+
+void main()
+{
+		printf("\nI am in main.c\n");
+		printf("\nCalling hello function");
+		hello();
+		printf("\nCalling add function");
+		add(3,5);
+		printf("\nBack in main.c\n");
+}
+
+-------------------------------------------------
+hello.c
+
+#include<stdio.h>
+#include"header.h"
+#include<unistd.h>
+
+void hello()
+{
+printf("\nI am in hello.c\n");
+printf("PID of hello.c is %d\n", getpid());
+}
+
+-------------------------------------------------
+add.c
+
+#include<stdio.h>
+#include"header.h"
+
+void add(int a, int b)
+{
+	int c;
+	c=a+b;
+	
+	printf("\nAddition = %d", c);
+	
+}
+
+-------------------------------------------------
+header.h
+
+void hello(void);
+void add(int a, int b);
+
+-------------------------------------------------
+
+makefile
+
+final: main.o add.o hello.o
+	gcc main.o add.o hello.o -o final
+	
+main.o: main.c header.h
+	gcc -c main.c
+
+hello.o: hello.c header.h
+	gcc -c hello.c
+
+add.o: add.c header.h
+	gcc -c add.c
